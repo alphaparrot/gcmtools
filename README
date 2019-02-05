@@ -1,5 +1,7 @@
  gcmtools.py -- Adiv Paradise
  
+ DEPENDENCIES: matplotlib, numpy, basemap, python-netcdf4
+ 
  parse(filename,variable,**kwargs):
  
     Returns the data contained in variable, along with the latitude and longitude arrays.
