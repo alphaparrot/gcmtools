@@ -16,37 +16,9 @@ class DatafileError(Exception):
 def show():
     plt.show()
 
-def parse(file,variable,lat=None,lon=None,time=None,lev=None,ignoreNaNs=True):
-    if ignoreNaNs:
-        sumop = np.nansum
-        meanop = np.nanmean
-    else:
-        sumop = np.sum
-        meanop = np.mean
+def parse(file,variable,lat=None,lon=None):
     ncd=nc.Dataset(file,"r")
     variable = ncd.variables[variable][:]
-    #if type(time)==int:
-        #variable=variable[time,:]
-    #elif type(time)==float:
-        #times = ncd.variables['time'][:]
-        #ct = np.argmin(abs(times-time))
-        #variable=variable[ct,:]
-    #elif time==None:
-        #variable=meanop(variable,axis=0)
-    #else:
-        #raise UnitError("Unknown format used for time keyword")
-
-    #if lev!=None:
-        #if type(lev)==int:
-            #variable=variable[lev,:]
-        #elif lev=="sum":
-            #variable=sumop(variable,axis=0)
-        #elif lev=="mean":
-            #variable=meanop(variable,axis=0)
-        #else:
-            #raise UnitError("Unknown level specification")
-    #elif len(variable.shape)>2:
-        #raise DimensionError("Variable is 3-dimensional, but you haven't specified a level")
     
     if lat:
         lt = ncd.variables[lat][:]
@@ -147,12 +119,13 @@ def spatialmath(variable,lat=None,lon=None,file=None,mean=True,time=None,
         meanop = np.mean
         
     if file:
-        ln,lt,variable = parse(file,variable,lat=lat,lon=lon,
-                               time=time,lev=lev,ignoreNaNs=ignoreNaNs)
+        ln,lt,variable = parse(file,variable,lat=lat,lon=lon)
         
     else:
         if lat==None or lon==None:
             raise DimensionError("Need to provide latitude and longitude data")
+        ln=lon
+        lt=lat
     variable = make2d(variable,time=time,lev=lev,ignoreNaNs=ignoreNaNs)
     
     lt1 = np.zeros(len(lt)+1)
@@ -218,7 +191,7 @@ def pcolormesh(variable,lon=None,lat=None,projection=None,cmap="viridis",
         else:
             vmax = symmetric + np.nanmax(abs(variable-symmetric))
             vmin = 2*symmetric - vmax
-            
+    
     if norm=="Log":
         normalization=colors.LogNorm(vmin=vmin,vmax=vmax)
     elif norm=="SymLog":
@@ -231,7 +204,7 @@ def pcolormesh(variable,lon=None,lat=None,projection=None,cmap="viridis",
         normalization=colors.Normalize(vmin=vmin,vmax=vmax)
     
     if type(lon)==type(None) or type(lat)==type(None):
-        im = plt.pcolormesh(variable,norm=norm,shading=shading,cmap=cmap)
+        im = plt.pcolormesh(variable,norm=normalization,shading=shading,cmap=cmap)
         if inverty:
             plt.gca().invert_yaxis()
         if invertx:
@@ -247,10 +220,10 @@ def pcolormesh(variable,lon=None,lat=None,projection=None,cmap="viridis",
             lat = wrap2d(lat)
         variable=wrap2d(variable)
         m=Basemap(projection=projection,**kwargs)
-        im=m.pcolormesh(lon,lat,variable,cmap=cmap,shading=shading,norm=norm,latlon=True)
+        im=m.pcolormesh(lon,lat,variable,cmap=cmap,shading=shading,norm=normalization,latlon=True)
         return m,im
     
-    im=plt.pcolormesh(lon,lat,variable,cmap=cmap,shading=shading,norm=norm,**kwargs)
+    im=plt.pcolormesh(lon,lat,variable,cmap=cmap,shading=shading,norm=normalization,**kwargs)
     if inverty:
         plt.gca().invert_yaxis()
     if invertx:
