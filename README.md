@@ -9,6 +9,12 @@ output from a gcm just slightly easier. Mostly it functions as a wrapper for mat
 and basemap, but it includes useful things like a function for area-weighted math and a
 function for computing the streamfunction and plotting the Hadley cells.
 
+## Installation
+
+You can either download and build/use from this repository, or you can use pip:
+
+``pip install gcmtools``
+
 
 ## Usage
 
@@ -140,4 +146,4 @@ gcmtools-specific arguments:
     
 Example:
 
-``pcolormesh(temperature,lon=lons,lat=lats,projection='moll',lon_0=0,cmap='RdBu_r',symmetric=273.15)``
+``pcolormesh(temperature,x=lons,y=lats,projection='moll',lon_0=0,cmap='RdBu_r',symmetric=273.15)``
