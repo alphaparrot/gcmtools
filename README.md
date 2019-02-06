@@ -13,7 +13,7 @@ function for computing the streamfunction and plotting the Hadley cells.
 
 You can either download and build/use from this repository, or you can use pip:
 
-``pip install gcmtools``
+`pip install gcmtools`
 
 
 ## Usage
@@ -146,4 +146,22 @@ gcmtools-specific arguments:
     
 Example:
 
-``pcolormesh(temperature,x=lons,y=lats,projection='moll',lon_0=0,cmap='RdBu_r',symmetric=273.15)``
+`pcolormesh(temperature,x=lons,y=lats,projection='moll',lon_0=0,cmap='RdBu_r',symmetric=273.15)`
+
+### hadley(filename,**kwargs)
+
+Compute the streamfunction, and plot the zonal mean as a function of latitude and pressure. Optionally overplot zonal wind contours.
+
+    * filename
+
+       File from which to extract the streamfunction.
+       
+    * contours (optional)
+
+       If True, compute the mean zonal wind and overplot it as a series of labeled contours.
+       
+    * ylog (optional)
+    
+       If True, use a logarithmic scale on the y-axis (corresponding to being linear in altitude).
+       
+       
