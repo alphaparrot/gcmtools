@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from mpl_toolkits.basemap import Basemap
 import netCDF4 as nc
+from matplotlib.pyplot import annotate,axvline,axhline,plot,scatter,
+                              fill_between,errorbar,tight_layout
 
 class DimensionError(Exception):
     pass
