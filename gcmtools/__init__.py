@@ -163,7 +163,7 @@ def wrap2d(var):
     newvar[:,-1] = var[:,0]
     return newvar
 
-def pcolormesh(variable,lon=None,lat=None,projection=None,cmap="viridis",
+def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
          shading='Gouraud',norm=None,vmin=None,vmax=None,invertx=False,
          inverty=False,linthresh=None,linscale=None,gamma=None,bounds=None,
          symmetric=False,ncolors=256,**kwargs):
@@ -203,7 +203,7 @@ def pcolormesh(variable,lon=None,lat=None,projection=None,cmap="viridis",
     else:
         normalization=colors.Normalize(vmin=vmin,vmax=vmax)
     
-    if type(lon)==type(None) or type(lat)==type(None):
+    if type(x)==type(None) or type(y)==type(None):
         im = plt.pcolormesh(variable,norm=normalization,shading=shading,cmap=cmap)
         if inverty:
             plt.gca().invert_yaxis()
@@ -213,20 +213,79 @@ def pcolormesh(variable,lon=None,lat=None,projection=None,cmap="viridis",
     
     if projection:
         
-        if len(lon.shape)==1:
-            lon,lat = np.meshgrid(lon,lat)
-            lon = wrap2d(lon)
-            lon[:,-1] = lon[:,0]+360.0
-            lat = wrap2d(lat)
+        if len(x.shape)==1:
+            x,y = np.meshgrid(x,y)
+            x = wrap2d(x)
+            x[:,-1] = x[:,0]+360.0
+            y = wrap2d(y)
         variable=wrap2d(variable)
         m=Basemap(projection=projection,**kwargs)
-        im=m.pcolormesh(lon,lat,variable,cmap=cmap,shading=shading,norm=normalization,latlon=True)
+        im=m.pcolormesh(x,y,variable,cmap=cmap,shading=shading,norm=normalization,latlon=True)
         return m,im
     
-    im=plt.pcolormesh(lon,lat,variable,cmap=cmap,shading=shading,norm=normalization,**kwargs)
+    im=plt.pcolormesh(x,y,variable,cmap=cmap,shading=shading,norm=normalization,**kwargs)
     if inverty:
         plt.gca().invert_yaxis()
     if invertx:
         plt.gca().invert_xaxis()
     return im
+    
+def _stream(va,lt,plevs):
+    '''assumed that va has a shape of ([plevs],[lt])'''
+    strf = np.zeros(va.shape)
+    pref = 2*np.pi*6.371e6*np.cos(lt*np.pi/180.0)/9.81
+    ps = np.array([0.0,]+list(plevs))
+    vas = np.zeros(np.array(va.shape)+np.array((1,0)))
+    vas[1:,:] = va[:,:]
+    for k in range(0,len(plevs)):
+        strf[k,:] = pref[:]*np.trapz(vas[0:k+1,:],x=ps[0:k+1],axis=0)
+    return strf
+
+def hadley(file,time=None,contours=None,ylog=False):
+    ln,lt,levs=parse(file,"lev")
+    plevs = levs*spatialmath("ps",file=file,time=time)
+    ln,lt,va = parse(file,"va")
+    va = make2d(va,lon="mean",time=time)
+    strf = _stream(va,lt,plevs)
+    ln,lt,ua = parse(file,"ua")
+    uavg=make2d(ua,lon="mean",time=time)
+    umin = 10*(int(uavg.min())/10+1)
+    umax = 10*(int(uavg.max())/10)
+    clvs = np.linspace(umin,umax,num=(umax-umin)/10+1)
+    if len(clvs) < 10:
+        umin = 5*(int(uavg.min())/5+1)
+        umax = 5*(int(uavg.max())/5)
+        clvs = np.linspace(umin,umax,num=(umax-umin)/5+1)
+    im=pcolormesh(strf,x=lt,y=plevs,cmap='RdBu_r',symmetric=True,invertx=True,inverty=True)
+    if contours:
+        cs=plt.contour(lt,plevs,uavg,np.linspace(-100,100,num=41),colors='gray',linestyles='-')
+        plt.clabel(cs,clvs,fmt='%1d',fontsize=8)
+    plt.colorbar(im,label="Streamfunction [kg/s]")
+    plt.xlabel("Latitude [$^\circ$N]")
+    plt.ylabel("Pressure [hPa]")
+    if ylog:
+        plt.yscale('log')
+    return im,cs
+        
+def savefig(filename,**kwargs):
+    plt.savefig(filename,**kwargs)
+    
+def xlabel(label,**kwargs):
+    plt.xlabel(label,**kwargs)
+    
+def ylabel(label,**kwargs):
+    plt.ylabel(label,**kwargs)
+    
+def xscale(scaling,**kwargs):
+    plt.xscale(scaling,**kwargs)
+    
+def yscale(scaling,**kwargs):
+    plt.yscale(scaling,**kwargs)
+    
+def title(title,**kwargs):
+    plt.title(title,**kwargs)
+    
+def subplots(*args,**kwargs):
+    f,a=plt.subplots(*args,**kwargs)
+    return f,a
     
