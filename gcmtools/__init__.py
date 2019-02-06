@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from mpl_toolkits.basemap import Basemap
 import netCDF4 as nc
-from matplotlib.pyplot import annotate,axvline,axhline,plot,scatter,fill_between,errorbar,tight_layout
+from matplotlib.pyplot import annotate,axvline,axhline,plot,legend,scatter,fill_between,errorbar,tight_layout
 
 class DimensionError(Exception):
     pass
@@ -204,6 +204,9 @@ def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
     else:
         normalization=colors.Normalize(vmin=vmin,vmax=vmax)
     
+    if len(variable.shape)>2:
+        variable=make2d(variable)
+    
     if type(x)==type(None) or type(y)==type(None):
         im = plt.pcolormesh(variable,norm=normalization,shading=shading,cmap=cmap)
         if inverty:
@@ -258,15 +261,17 @@ def hadley(file,time=None,contours=None,ylog=False):
         umax = 5*(int(uavg.max())/5)
         clvs = np.linspace(umin,umax,num=(umax-umin)/5+1)
     im=pcolormesh(strf,x=lt,y=plevs,cmap='RdBu_r',symmetric=True,invertx=True,inverty=True)
-    if contours:
-        cs=plt.contour(lt,plevs,uavg,np.linspace(-100,100,num=41),colors='gray',linestyles='-')
-        plt.clabel(cs,clvs,fmt='%1d',fontsize=8)
     plt.colorbar(im,label="Streamfunction [kg/s]")
     plt.xlabel("Latitude [$^\circ$N]")
     plt.ylabel("Pressure [hPa]")
     if ylog:
         plt.yscale('log')
-    return im,cs
+    if contours:
+        cs=plt.contour(lt,plevs,uavg,np.linspace(-100,100,num=41),colors='gray',linestyles='-')
+        plt.clabel(cs,clvs,fmt='%1d',fontsize=8)
+        return im,cs
+    else:
+        return im
         
 def savefig(filename,**kwargs):
     plt.savefig(filename,**kwargs)
