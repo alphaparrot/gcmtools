@@ -1,3 +1,8 @@
 0000000000000000000000000000000000000000 0ce2b2e2454157ad08bb196e76df8fbda700eba9 Adiv Paradise <paradise@astro.utoronto.ca> 1549398586 -0500	commit (initial): Initial commit
 0ce2b2e2454157ad08bb196e76df8fbda700eba9 f09716a3d682d2b2df62b8131608b21a16adb30f Adiv Paradise <paradise@astro.utoronto.ca> 1549401507 -0500	commit: Bugfixes; added README
 f09716a3d682d2b2df62b8131608b21a16adb30f 5d4b8b3de1bdf3759983a94135b50b6c02caa92f Adiv Paradise <paradise@astro.utoronto.ca> 1549401684 -0500	commit: Updated README with dependencies
+5d4b8b3de1bdf3759983a94135b50b6c02caa92f 569661f8b309da12f538b6837be8f3f1b6af2ffa Adiv Paradise <paradise@astro.utoronto.ca> 1549405416 -0500	commit: Moved to python package format, and registered with PyPI. Should now be able to install with `pip install gcmtools`.
+569661f8b309da12f538b6837be8f3f1b6af2ffa f48d5d9c4283ffe9e2c717d0e9e362157cb4b9ef Adiv Paradise <paradise@astro.utoronto.ca> 1549412190 -0500	commit: Added Hadley cell functionality plus other plotting utilities
+f48d5d9c4283ffe9e2c717d0e9e362157cb4b9ef 3ab5b2e393e29caf8e2002ff8361b917032eb82f Adiv Paradise <paradise@astro.utoronto.ca> 1549414347 -0500	commit: Added more pass-throughs to matplotlib functionality
+3ab5b2e393e29caf8e2002ff8361b917032eb82f b0e7110018ed7357e222f289480d6d9277ab86e3 Adiv Paradise <paradise@astro.utoronto.ca> 1549414476 -0500	commit: brownbag commit
+b0e7110018ed7357e222f289480d6d9277ab86e3 0e19bdee11b7a684a09f281678412d35e1fd85a7 Adiv Paradise <paradise@astro.utoronto.ca> 1549420703 -0500	commit: Small changes

@@ -5,6 +5,23 @@ from mpl_toolkits.basemap import Basemap
 import netCDF4 as nc
 from matplotlib.pyplot import annotate,axvline,axhline,plot,legend,scatter,fill_between,errorbar,tight_layout
 
+class _Dataset:
+    def __init__(self,filename):
+        if filename[-3:]==".nc":
+            self.body = nc.Dataset(filename,"r")
+            self.variables=self.body.variables
+        elif filename[-4:]==".npy":
+            self.body = np.load(filename)
+            self.variables = self.body.item()
+        else:
+            raise DatafileError("Unknown dataset format")
+        
+    def close(self):
+        try:
+            self.body.close()
+        except:
+            pass
+
 class DimensionError(Exception):
     pass
 
@@ -18,7 +35,7 @@ def show():
     plt.show()
 
 def parse(file,variable,lat=None,lon=None):
-    ncd=nc.Dataset(file,"r")
+    ncd=_Dataset(file)
     variable = ncd.variables[variable][:]
     
     if lat:
@@ -123,7 +140,7 @@ def spatialmath(variable,lat=None,lon=None,file=None,mean=True,time=None,
         ln,lt,variable = parse(file,variable,lat=lat,lon=lon)
         
     else:
-        if lat==None or lon==None:
+        if type(lat)==type(None) or type(lon)==type(None):
             raise DimensionError("Need to provide latitude and longitude data")
         ln=lon
         lt=lat
