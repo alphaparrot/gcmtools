@@ -185,7 +185,7 @@ def wrap2d(var):
 
 def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
          shading='Gouraud',norm=None,vmin=None,vmax=None,invertx=False,
-         inverty=False,linthresh=None,linscale=None,gamma=None,bounds=None,
+         inverty=False,linthresh=1.0e-3,linscale=1.0,gamma=1.0,bounds=None,
          symmetric=False,ncolors=256,**kwargs):
     
     if symmetric==True: #assumes zero is the midpoint
@@ -212,6 +212,10 @@ def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
             vmax = symmetric + np.nanmax(abs(variable-symmetric))
             vmin = 2*symmetric - vmax
     
+    else:
+        vmin = variable.min()
+        vmax = variable.max()
+    
     if norm=="Log":
         normalization=colors.LogNorm(vmin=vmin,vmax=vmax)
     elif norm=="SymLog":
@@ -219,6 +223,8 @@ def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
     elif norm=="PowerLog":
         normalization=colors.PowerNorm(gamma,vmin=vmin,vmax=vmax)
     elif norm=="Bounds":
+        if type(bounds)==type(None):
+            bounds = np.linspace(vmin,vmax,num=ncolors+1)
         normalization=colors.BoundaryNorm(bounds=bounds,ncolors=ncolors)
     else:
         normalization=colors.Normalize(vmin=vmin,vmax=vmax)
