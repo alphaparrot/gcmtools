@@ -1,9 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as colors
 from mpl_toolkits.basemap import Basemap
 import netCDF4 as nc
-from matplotlib.pyplot import annotate,axvline,axhline,plot,legend,scatter,fill_between,errorbar,tight_layout,colorbar
+
+from matplotlib.pyplot import *
+
+for name in ["pcolormesh","colors"]:
+    del globals()[name]
+
+import matplotlib.colors as colors
 
 class _Dataset:
     def __init__(self,filename):
@@ -30,9 +35,6 @@ class UnitError(Exception):
 
 class DatafileError(Exception):
     pass
-
-def show():
-    plt.show()
 
 def parse(file,variable,lat=None,lon=None):
     ncd=_Dataset(file)
@@ -289,26 +291,5 @@ def hadley(file,time=None,contours=None,ylog=False,**kwargs):
         return im,cs
     else:
         return im
-        
-def savefig(filename,**kwargs):
-    plt.savefig(filename,**kwargs)
-    
-def xlabel(label,**kwargs):
-    plt.xlabel(label,**kwargs)
-    
-def ylabel(label,**kwargs):
-    plt.ylabel(label,**kwargs)
-    
-def xscale(scaling,**kwargs):
-    plt.xscale(scaling,**kwargs)
-    
-def yscale(scaling,**kwargs):
-    plt.yscale(scaling,**kwargs)
-    
-def title(title,**kwargs):
-    plt.title(title,**kwargs)
-    
-def subplots(*args,**kwargs):
-    f,a=plt.subplots(*args,**kwargs)
-    return f,a
+
     

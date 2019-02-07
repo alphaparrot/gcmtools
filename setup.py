@@ -2,12 +2,12 @@ from distutils.core import setup
 
 setup(
     name='gcmtools',
-    version='0.3.4',
+    version='0.4.2',
     packages=['gcmtools',],
     author='Adiv Paradise',
     author_email='paradise.astro@gmail.com',
     license='GNU General Public License',
-    url='http://pypi.python.org/pypi/gcmtools/',
+    url='https://github.com/alphaparrot/gcmtools',
     description='GCM Output Analysis Tools',
     long_description=open('README.txt').read(),
     )
