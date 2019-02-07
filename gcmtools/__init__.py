@@ -225,7 +225,7 @@ def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
     elif norm=="Bounds":
         if type(bounds)==type(None):
             bounds = np.linspace(vmin,vmax,num=ncolors+1)
-        normalization=colors.BoundaryNorm(bounds=bounds,ncolors=ncolors)
+        normalization=colors.BoundaryNorm(bounds,ncolors)
     else:
         normalization=colors.Normalize(vmin=vmin,vmax=vmax)
     
