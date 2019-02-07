@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='gcmtools',
-    version='0.4.2',
+    version='0.4.3',
     packages=['gcmtools',],
     author='Adiv Paradise',
     author_email='paradise.astro@gmail.com',

@@ -215,9 +215,9 @@ def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
     if norm=="Log":
         normalization=colors.LogNorm(vmin=vmin,vmax=vmax)
     elif norm=="SymLog":
-        normalization=colors.SymLog(vmin=vmin,vmax=vmax,linthresh=linthresh,linscale=linscale)
+        normalization=colors.SymLogNorm(vmin=vmin,vmax=vmax,linthresh=linthresh,linscale=linscale)
     elif norm=="PowerLog":
-        normalization=colors.PowerLog(gamma,vmin=vmin,vmax=vmax)
+        normalization=colors.PowerNorm(gamma,vmin=vmin,vmax=vmax)
     elif norm=="Bounds":
         normalization=colors.BoundaryNorm(bounds=bounds,ncolors=ncolors)
     else:
