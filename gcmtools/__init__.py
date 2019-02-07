@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from mpl_toolkits.basemap import Basemap
 import netCDF4 as nc
-from matplotlib.pyplot import annotate,axvline,axhline,plot,legend,scatter,fill_between,errorbar,tight_layout
+from matplotlib.pyplot import annotate,axvline,axhline,plot,legend,scatter,fill_between,errorbar,tight_layout,colorbar
 
 class _Dataset:
     def __init__(self,filename):
@@ -262,7 +262,7 @@ def _stream(va,lt,plevs):
         strf[k,:] = pref[:]*np.trapz(vas[0:k+1,:],x=ps[0:k+1],axis=0)
     return strf
 
-def hadley(file,time=None,contours=None,ylog=False):
+def hadley(file,time=None,contours=None,ylog=False,**kwargs):
     ln,lt,levs=parse(file,"lev")
     plevs = levs*spatialmath("ps",file=file,time=time)
     ln,lt,va = parse(file,"va")
@@ -277,7 +277,7 @@ def hadley(file,time=None,contours=None,ylog=False):
         umin = 5*(int(uavg.min())/5+1)
         umax = 5*(int(uavg.max())/5)
         clvs = np.linspace(umin,umax,num=(umax-umin)/5+1)
-    im=pcolormesh(strf,x=lt,y=plevs,cmap='RdBu_r',symmetric=True,invertx=True,inverty=True)
+    im=pcolormesh(strf,x=lt,y=plevs,cmap='RdBu_r',symmetric=True,invertx=True,inverty=True,**kwargs)
     plt.colorbar(im,label="Streamfunction [kg/s]")
     plt.xlabel("Latitude [$^\circ$N]")
     plt.ylabel("Pressure [hPa]")
