@@ -6,3 +6,11 @@ f09716a3d682d2b2df62b8131608b21a16adb30f 5d4b8b3de1bdf3759983a94135b50b6c02caa92
 f48d5d9c4283ffe9e2c717d0e9e362157cb4b9ef 3ab5b2e393e29caf8e2002ff8361b917032eb82f Adiv Paradise <paradise@astro.utoronto.ca> 1549414347 -0500	commit: Added more pass-throughs to matplotlib functionality
 3ab5b2e393e29caf8e2002ff8361b917032eb82f b0e7110018ed7357e222f289480d6d9277ab86e3 Adiv Paradise <paradise@astro.utoronto.ca> 1549414476 -0500	commit: brownbag commit
 b0e7110018ed7357e222f289480d6d9277ab86e3 0e19bdee11b7a684a09f281678412d35e1fd85a7 Adiv Paradise <paradise@astro.utoronto.ca> 1549420703 -0500	commit: Small changes
+0e19bdee11b7a684a09f281678412d35e1fd85a7 881d65c4affc66c5427682019d1c215e1fcfdb6c Adiv Paradise <paradise@astro.utoronto.ca> 1549489633 -0500	commit: Mostly minor changes, plus new markdown Readme for github
+881d65c4affc66c5427682019d1c215e1fcfdb6c 923ccabb3fe9871f165c4c104ef41edd07aac335 Adiv Paradise <paradise@astro.utoronto.ca> 1549489746 -0500	commit: Added installation instructions to readme
+923ccabb3fe9871f165c4c104ef41edd07aac335 f34cfa424d6b19fcc96160f68090d7cb1d72b458 Adiv Paradise <paradise@astro.utoronto.ca> 1549490374 -0500	commit: Small changes
+f34cfa424d6b19fcc96160f68090d7cb1d72b458 208c825b00330232d93e5899f00956d38e5da4d6 Adiv Paradise <paradise@astro.utoronto.ca> 1549559369 -0500	commit: Added missing things
+208c825b00330232d93e5899f00956d38e5da4d6 15399e18c544d92031565e6ea482a4f38acc79d5 Adiv Paradise <paradise@astro.utoronto.ca> 1549565318 -0500	commit: Added complete passthrough to matplotlib, changed homepage URL
+15399e18c544d92031565e6ea482a4f38acc79d5 71209fc66b41b38b9ae8427a6e3326881513c244 Adiv Paradise <paradise@astro.utoronto.ca> 1549571563 -0500	commit: brownbag commit
+71209fc66b41b38b9ae8427a6e3326881513c244 60ca70c3feb3c523657ae43cb458f023072dff2a Adiv Paradise <paradise@astro.utoronto.ca> 1549571988 -0500	commit: Bugfixes in pcolormesh pass-through
+60ca70c3feb3c523657ae43cb458f023072dff2a 08ea7b2bd5ef26d46ff4909e80b12dd34d854488 Adiv Paradise <paradise@astro.utoronto.ca> 1549572310 -0500	commit: Fix for boundary norm

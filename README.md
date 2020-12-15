@@ -3,6 +3,7 @@
 By Adiv Paradise
 
 _DEPENDENCIES: matplotlib, numpy, basemap, python-netcdf4_
+_OPTIONAL (for interactive plots): nodejs, jupyter-widgets, jupyter-matplotlib_
 
 This is a collection of custom functions, wrappers, and other tools to make analyzing 
 output from a gcm just slightly easier. Mostly it functions as a wrapper for matplotlib
@@ -13,12 +14,12 @@ function for computing the streamfunction and plotting the Hadley cells.
 
 You can either download and build/use from this repository, or you can use pip:
 
-`pip install gcmtools`
+``pip install gcmtools``
 
 
 ## Usage
 
-### parse(filename,variable,**kwargs)
+### ``parse(filename,variable,\*\*kwargs)``
  
 Returns the data contained in variable, along with the latitude and longitude arrays.
  
@@ -39,7 +40,7 @@ Returns the data contained in variable, along with the latitude and longitude ar
         What name to use for the longitude array when parsing the file
     
     
-### make2d(variable,**kwargs)
+### ``make2d(variable,\*\*kwargs)``
 
 Returns a 2D slice of the given variable
     
@@ -75,7 +76,7 @@ Returns a 2D slice of the given variable
         None (default): Take the time-average of the data
             
 
-### spatialmath(variable,**kwargs)
+### ``spatialmath(variable,\*\*kwargs)``
     
 Returns the area-weighted average or sum of the given variable
     
@@ -117,16 +118,16 @@ Returns the area-weighted average or sum of the given variable
         (if not computing the mean)
 
             
-### wrap2d(variable)
+### ``wrap2d(variable)``
 
 Add a longitude column to a 2D lat-lon array, and fill it with the first column
     
 
-### pcolormesh(variable,**kwargs)
+### ``pcolormesh(variable,\*\*kwargs)``
     
-Create and return a pcolormesh object showing variable. **kwargs can include all
+Create and return a pcolormesh object showing variable. ``\*\*kwargs`` can include all
 normal pcolormesh keyword arguments, and if the 'projection' keyword argument is
-specified, **kwargs can also contain any Basemap arguments.
+specified, ``\*\*kwargs`` can also contain any Basemap arguments.
     
 gcmtools-specific arguments:
     
@@ -146,9 +147,9 @@ gcmtools-specific arguments:
     
 Example:
 
-`pcolormesh(temperature,x=lons,y=lats,projection='moll',lon_0=0,cmap='RdBu_r',symmetric=273.15)`
+``pcolormesh(temperature,x=lons,y=lats,projection='moll',lon_0=0,cmap='RdBu_r',symmetric=273.15)``
 
-### hadley(filename,**kwargs)
+### ``hadley(filename,\*\*kwargs)``
 
 Compute the streamfunction, and plot the zonal mean as a function of latitude and pressure. Optionally overplot zonal wind contours.
 
