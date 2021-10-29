@@ -16,6 +16,35 @@ except:
 
 import matplotlib.colors as colors
 
+def xcolorbar(mappable,fontsize=None,ticksize=None,nticks=None,**kwargs):
+    cbar = plt.colorbar(mappable,**kwargs)
+    if fontsize is not None and "label" in kwargs:
+        cbar.set_label(label=kwargs["label"],fontsize=fontsize)
+    if ticksize is not None:
+        cbar.ax.tick_params(labelsize=ticksize)
+        if nticks is not None:
+            from matplotlib import ticker
+            tick_locator = ticker.MaxNLocator(nbins=7)
+            cbar.locator = tick_locator
+            cbar.update_ticks()
+    return cbar
+
+class _xBasemap(Basemap):
+    def __init__(self,**kwargs):
+        super(_xBasemap,self).__init__(**kwargs)
+    def xcolorbar(self,mappable,fontsize=None,ticksize=None,nticks=None,**kwargs):
+        cbar = super(_xBasemap,self).colorbar(mappable,**kwargs)
+        if fontsize is not None and "label" in kwargs:
+            cbar.set_label(label=kwargs["label"],fontsize=fontsize)
+        if ticksize is not None:
+            cbar.ax.tick_params(labelsize=ticksize)
+        if nticks is not None:
+            from matplotlib import ticker
+            tick_locator = ticker.MaxNLocator(nbins=7)
+            cbar.locator = tick_locator
+            cbar.update_ticks()
+        return cbar
+
 class _Dataset:
     def __init__(self,filename):
         if filename[-3:]==".nc":
@@ -560,7 +589,7 @@ def pcolormesh(variable,x=None,y=None,projection=None,cmap="viridis",
             x[:,-1] = x[:,0]+360.0
             y = wrap2d(y)
         variable=wrap2d(variable)
-        m=Basemap(projection=projection,**kwargs)
+        m=_xBasemap(projection=projection,**kwargs)
         im=m.pcolormesh(x,y,variable,cmap=cmap,shading=shading,norm=normalization,latlon=True)
         return m,im
     

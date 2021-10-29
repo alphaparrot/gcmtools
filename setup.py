@@ -3,7 +3,7 @@ import os
 
 setup(
     name='gcmtools',
-    version='0.5.2',
+    version='0.5.7',
     packages=['gcmtools',],
     zip_safe=False,
     install_requires=["numpy","netCDF4","matplotlib","scipy"],
