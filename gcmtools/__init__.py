@@ -24,7 +24,7 @@ def xcolorbar(mappable,fontsize=None,ticksize=None,nticks=None,**kwargs):
         cbar.ax.tick_params(labelsize=ticksize)
         if nticks is not None:
             from matplotlib import ticker
-            tick_locator = ticker.MaxNLocator(nbins=7)
+            tick_locator = ticker.MaxNLocator(nbins=nticks)
             cbar.locator = tick_locator
             cbar.update_ticks()
     return cbar
@@ -40,7 +40,7 @@ class _xBasemap(Basemap):
             cbar.ax.tick_params(labelsize=ticksize)
         if nticks is not None:
             from matplotlib import ticker
-            tick_locator = ticker.MaxNLocator(nbins=7)
+            tick_locator = ticker.MaxNLocator(nbins=nticks)
             cbar.locator = tick_locator
             cbar.update_ticks()
         return cbar
